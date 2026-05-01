@@ -26,6 +26,9 @@ export default {
         foreground: "hsl(var(--foreground))",
         success: "hsl(var(--success))",
         warning: "hsl(var(--warning))",
+        positive: "hsl(var(--positive))",
+        negative: "hsl(var(--negative))",
+        surface: "hsl(var(--surface))",
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
