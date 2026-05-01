@@ -7,9 +7,9 @@
 @layer base {
   :root {
     /* Surfaces */
-    --background: 60 20% 97%;            /* warm off-white #F7F7F2 */
+    --background: 60 20% 97%; /* warm off-white #F7F7F2 */
     --surface: 0 0% 100%;
-    --foreground: 155 60% 8%;            /* deep forest near-black #07221A */
+    --foreground: 155 60% 8%; /* deep forest near-black #07221A */
 
     --card: 0 0% 100%;
     --card-foreground: 155 60% 8%;
@@ -18,11 +18,11 @@
     --popover-foreground: 155 60% 8%;
 
     /* Primary = deep forest green (Lemonn dark) */
-    --primary: 158 60% 12%;              /* #0E3326 */
+    --primary: 158 60% 12%; /* #0E3326 */
     --primary-foreground: 0 0% 100%;
 
     /* Accent = lemon-lime green */
-    --accent: 75 84% 64%;                /* #C5F24A */
+    --accent: 75 84% 64%; /* #C5F24A */
     --accent-foreground: 158 60% 12%;
 
     --secondary: 60 15% 94%;
@@ -36,8 +36,8 @@
 
     --success: 142 65% 38%;
     --warning: 38 92% 50%;
-    --positive: 142 70% 42%;             /* up arrow green */
-    --negative: 358 75% 55%;             /* down arrow red */
+    --positive: 142 70% 42%; /* up arrow green */
+    --negative: 358 75% 55%; /* down arrow red */
 
     --border: 60 10% 89%;
     --input: 60 10% 89%;
@@ -56,7 +56,7 @@
   }
 
   .dark {
-    --background: 158 40% 6%;            /* near-black forest */
+    --background: 158 40% 6%; /* near-black forest */
     --surface: 158 35% 9%;
     --foreground: 60 20% 96%;
 
@@ -66,7 +66,7 @@
     --popover: 158 35% 9%;
     --popover-foreground: 60 20% 96%;
 
-    --primary: 75 84% 64%;               /* lemon green pops in dark */
+    --primary: 75 84% 64%; /* lemon green pops in dark */
     --primary-foreground: 158 60% 8%;
 
     --accent: 75 84% 64%;
@@ -102,10 +102,16 @@
 }
 
 @layer base {
-  * { @apply border-border; }
+  * {
+    @apply border-border;
+  }
 
   html {
-    font-family: 'Sora', system-ui, -apple-system, sans-serif;
+    font-family:
+      'Sora',
+      system-ui,
+      -apple-system,
+      sans-serif;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
@@ -143,12 +149,24 @@
     opacity: 0;
     animation: fade-up 0.6s ease-out forwards;
   }
-  .stagger > *:nth-child(1) { animation-delay: 0.05s; }
-  .stagger > *:nth-child(2) { animation-delay: 0.15s; }
-  .stagger > *:nth-child(3) { animation-delay: 0.25s; }
-  .stagger > *:nth-child(4) { animation-delay: 0.35s; }
-  .stagger > *:nth-child(5) { animation-delay: 0.45s; }
-  .stagger > *:nth-child(6) { animation-delay: 0.55s; }
+  .stagger > *:nth-child(1) {
+    animation-delay: 0.05s;
+  }
+  .stagger > *:nth-child(2) {
+    animation-delay: 0.15s;
+  }
+  .stagger > *:nth-child(3) {
+    animation-delay: 0.25s;
+  }
+  .stagger > *:nth-child(4) {
+    animation-delay: 0.35s;
+  }
+  .stagger > *:nth-child(5) {
+    animation-delay: 0.45s;
+  }
+  .stagger > *:nth-child(6) {
+    animation-delay: 0.55s;
+  }
 
   /* Lemonn-style badge pill */
   .pill-accent {
@@ -164,11 +182,37 @@
 }
 
 @keyframes fade-up {
-  from { opacity: 0; transform: translateY(12px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
 }

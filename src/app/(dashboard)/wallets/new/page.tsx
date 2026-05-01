@@ -1,5 +1,7 @@
+"use client";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
+;
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,7 +11,7 @@ import { CHAINS, type ChainKey } from "@/lib/wotify";
 import { toast } from "@/hooks/use-toast";
 
 const AddWallet = () => {
-  const navigate = useNavigate();
+  const navigate = useRouter();
   const [chain, setChain] = useState<ChainKey>("ethereum");
   const [address, setAddress] = useState("");
   const [label, setLabel] = useState("");
@@ -24,7 +26,7 @@ const AddWallet = () => {
     }
     setErr(null);
     toast({ title: "Wallet added", description: "We'll start watching activity instantly." });
-    navigate("/dashboard");
+    navigate.push("/dashboard");
   };
 
   return (
@@ -84,7 +86,7 @@ const AddWallet = () => {
           <Button type="submit" className="rounded-full h-11 px-6">
             Start watching <ArrowRight className="ml-1 h-4 w-4" />
           </Button>
-          <Button type="button" variant="outline" className="rounded-full h-11 px-6" onClick={() => navigate(-1)}>
+          <Button type="button" variant="outline" className="rounded-full h-11 px-6" onClick={() => navigate.back()}>
             Cancel
           </Button>
         </div>

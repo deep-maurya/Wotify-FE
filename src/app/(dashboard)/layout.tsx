@@ -1,7 +1,10 @@
-import { NavLink, Outlet, useLocation } from "react-router-dom";
+"use client";
+
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 import { Bell, LayoutDashboard, Plus, Wallet, LogOut } from "lucide-react";
-import { Logo } from "./Logo";
-import { ThemeToggle } from "./ThemeToggle";
+import { Logo } from "@/components/wotify/Logo";
+import { ThemeToggle } from "@/components/wotify/ThemeToggle";
 import { cn } from "@/lib/utils";
 
 const nav = [
@@ -10,8 +13,12 @@ const nav = [
   { to: "/notifications", label: "Notifications", icon: Bell },
 ];
 
-export const DashboardLayout = () => {
-  const { pathname } = useLocation();
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const pathname = usePathname();
   return (
     <div className="min-h-screen flex w-full bg-background">
       <aside className="hidden md:flex w-64 shrink-0 flex-col border-r border-border bg-sidebar">
@@ -22,9 +29,9 @@ export const DashboardLayout = () => {
           {nav.map((item) => {
             const active = pathname === item.to;
             return (
-              <NavLink
+              <Link
                 key={item.to}
-                to={item.to}
+                href={item.to}
                 className={cn(
                   "flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors",
                   active
@@ -34,18 +41,18 @@ export const DashboardLayout = () => {
               >
                 <item.icon className="h-4 w-4" />
                 {item.label}
-              </NavLink>
+              </Link>
             );
           })}
         </nav>
         <div className="px-3 py-4 border-t border-border">
-          <NavLink
-            to="/"
+          <Link
+            href="/"
             className="flex items-center gap-3 rounded-md px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-secondary"
           >
             <LogOut className="h-4 w-4" />
             Sign out
-          </NavLink>
+          </Link>
         </div>
       </aside>
 
@@ -68,10 +75,10 @@ export const DashboardLayout = () => {
         </header>
         <main className="flex-1 px-6 md:px-10 py-8 md:py-12">
           <div className="mx-auto max-w-6xl animate-fade-in">
-            <Outlet />
+            {children}
           </div>
         </main>
       </div>
     </div>
   );
-};
+}

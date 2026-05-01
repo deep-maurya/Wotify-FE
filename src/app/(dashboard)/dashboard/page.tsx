@@ -1,4 +1,6 @@
-import { Link } from "react-router-dom";
+"use client";
+import Link from "next/link";
+;
 import { ArrowUpRight, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ChainTag } from "@/components/wotify/ChainTag";
@@ -22,7 +24,7 @@ const Dashboard = () => {
           <h1 className="font-serif text-4xl md:text-5xl mt-2 leading-tight">Good morning, Jane.</h1>
           <p className="mt-2 text-muted-foreground">Here's what's moving across your watchlist.</p>
         </div>
-        <Link to="/wallets/new">
+        <Link href="/wallets/new">
           <Button className="rounded-full h-11 px-5">
             <Plus className="h-4 w-4 mr-1" /> Add wallet
           </Button>
@@ -43,7 +45,7 @@ const Dashboard = () => {
       <section>
         <div className="flex items-end justify-between mb-5">
           <h2 className="font-serif text-2xl">Watched wallets</h2>
-          <Link to="/wallets/new" className="text-sm text-muted-foreground hover:text-foreground inline-flex items-center gap-1">
+          <Link href="/wallets/new" className="text-sm text-muted-foreground hover:text-foreground inline-flex items-center gap-1">
             Manage <ArrowUpRight className="h-3.5 w-3.5" />
           </Link>
         </div>
@@ -71,7 +73,7 @@ const Dashboard = () => {
       <section>
         <div className="flex items-end justify-between mb-5">
           <h2 className="font-serif text-2xl">Recent activity</h2>
-          <Link to="/notifications" className="text-sm text-muted-foreground hover:text-foreground inline-flex items-center gap-1">
+          <Link href="/notifications" className="text-sm text-muted-foreground hover:text-foreground inline-flex items-center gap-1">
             View all <ArrowUpRight className="h-3.5 w-3.5" />
           </Link>
         </div>

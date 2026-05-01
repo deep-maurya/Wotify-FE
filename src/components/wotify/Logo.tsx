@@ -1,7 +1,8 @@
-import { Link } from "react-router-dom";
+import Link from "next/link";
+;
 
-export const Logo = ({ to = "/" }: { to?: string }) => (
-  <Link to={to} className="inline-flex items-center gap-1.5 group">
+export const Logo = ({ href = "/" }: { href?: string }) => (
+  <Link href={href} className="inline-flex items-center gap-1.5 group">
     <span className="grid h-8 w-8 place-items-center rounded-lg bg-primary text-primary-foreground text-sm font-bold">
       W
     </span>
