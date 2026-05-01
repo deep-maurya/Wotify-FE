@@ -2,100 +2,107 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Wotify design system — luxury fintech. All colors HSL. */
+/* Wotify — Lemonn-inspired design system. All colors HSL. */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;            /* #FFFFFF */
-    --foreground: 0 0% 4%;              /* #0A0A0A */
+    /* Surfaces */
+    --background: 60 20% 97%;            /* warm off-white #F7F7F2 */
+    --surface: 0 0% 100%;
+    --foreground: 155 60% 8%;            /* deep forest near-black #07221A */
 
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 4%;
+    --card-foreground: 155 60% 8%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 4%;
+    --popover-foreground: 155 60% 8%;
 
-    --primary: 239 84% 60%;             /* electric indigo #4F46E5 */
+    /* Primary = deep forest green (Lemonn dark) */
+    --primary: 158 60% 12%;              /* #0E3326 */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 0 0% 96%;
-    --secondary-foreground: 0 0% 4%;
+    /* Accent = lemon-lime green */
+    --accent: 75 84% 64%;                /* #C5F24A */
+    --accent-foreground: 158 60% 12%;
 
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 40%;
+    --secondary: 60 15% 94%;
+    --secondary-foreground: 158 60% 12%;
 
-    --accent: 239 84% 60%;
-    --accent-foreground: 0 0% 100%;
+    --muted: 60 15% 94%;
+    --muted-foreground: 155 12% 38%;
 
-    --destructive: 0 75% 55%;
+    --destructive: 358 75% 55%;
     --destructive-foreground: 0 0% 100%;
 
-    --success: 142 70% 40%;
+    --success: 142 65% 38%;
     --warning: 38 92% 50%;
+    --positive: 142 70% 42%;             /* up arrow green */
+    --negative: 358 75% 55%;             /* down arrow red */
 
-    --border: 0 0% 92%;                 /* thin 1px borders */
-    --input: 0 0% 92%;
-    --ring: 239 84% 60%;
+    --border: 60 10% 89%;
+    --input: 60 10% 89%;
+    --ring: 158 60% 12%;
 
-    --radius: 0.5rem;
+    --radius: 1rem;
 
-    --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 0 0% 4%;
-    --sidebar-primary: 239 84% 60%;
+    --sidebar-background: 60 20% 97%;
+    --sidebar-foreground: 158 60% 12%;
+    --sidebar-primary: 158 60% 12%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 96%;
-    --sidebar-accent-foreground: 0 0% 4%;
-    --sidebar-border: 0 0% 92%;
-    --sidebar-ring: 239 84% 60%;
+    --sidebar-accent: 60 15% 94%;
+    --sidebar-accent-foreground: 158 60% 12%;
+    --sidebar-border: 60 10% 89%;
+    --sidebar-ring: 158 60% 12%;
   }
 
   .dark {
-    --background: 0 0% 4%;              /* #0A0A0A */
-    --foreground: 0 0% 98%;
+    --background: 158 40% 6%;            /* near-black forest */
+    --surface: 158 35% 9%;
+    --foreground: 60 20% 96%;
 
-    --card: 0 0% 6%;
-    --card-foreground: 0 0% 98%;
+    --card: 158 35% 9%;
+    --card-foreground: 60 20% 96%;
 
-    --popover: 0 0% 6%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 158 35% 9%;
+    --popover-foreground: 60 20% 96%;
 
-    --primary: 239 84% 67%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 75 84% 64%;               /* lemon green pops in dark */
+    --primary-foreground: 158 60% 8%;
 
-    --secondary: 0 0% 10%;
-    --secondary-foreground: 0 0% 98%;
+    --accent: 75 84% 64%;
+    --accent-foreground: 158 60% 8%;
 
-    --muted: 0 0% 10%;
-    --muted-foreground: 0 0% 63%;
+    --secondary: 158 30% 14%;
+    --secondary-foreground: 60 20% 96%;
 
-    --accent: 239 84% 67%;
-    --accent-foreground: 0 0% 100%;
+    --muted: 158 30% 14%;
+    --muted-foreground: 60 8% 65%;
 
-    --destructive: 0 75% 55%;
+    --destructive: 358 70% 55%;
     --destructive-foreground: 0 0% 100%;
 
     --success: 142 65% 50%;
     --warning: 38 92% 55%;
+    --positive: 142 65% 55%;
+    --negative: 358 70% 60%;
 
-    --border: 0 0% 14%;
-    --input: 0 0% 14%;
-    --ring: 239 84% 67%;
+    --border: 158 25% 16%;
+    --input: 158 25% 16%;
+    --ring: 75 84% 64%;
 
-    --sidebar-background: 0 0% 4%;
-    --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 239 84% 67%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 10%;
-    --sidebar-accent-foreground: 0 0% 98%;
-    --sidebar-border: 0 0% 14%;
-    --sidebar-ring: 239 84% 67%;
+    --sidebar-background: 158 40% 6%;
+    --sidebar-foreground: 60 20% 96%;
+    --sidebar-primary: 75 84% 64%;
+    --sidebar-primary-foreground: 158 60% 8%;
+    --sidebar-accent: 158 30% 14%;
+    --sidebar-accent-foreground: 60 20% 96%;
+    --sidebar-border: 158 25% 16%;
+    --sidebar-ring: 75 84% 64%;
   }
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
+  * { @apply border-border; }
 
   html {
     font-family: 'Sora', system-ui, -apple-system, sans-serif;
@@ -105,7 +112,6 @@
 
   body {
     @apply bg-background text-foreground;
-    font-feature-settings: 'cv11', 'ss01';
   }
 
   .font-serif {
@@ -121,7 +127,7 @@
 
 @layer components {
   .card-hover {
-    @apply transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_8px_30px_-10px_hsl(0_0%_0%/0.08)];
+    @apply transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_12px_40px_-16px_hsl(158_60%_12%/0.18)];
   }
 
   .live-dot {
@@ -143,9 +149,26 @@
   .stagger > *:nth-child(4) { animation-delay: 0.35s; }
   .stagger > *:nth-child(5) { animation-delay: 0.45s; }
   .stagger > *:nth-child(6) { animation-delay: 0.55s; }
+
+  /* Lemonn-style badge pill */
+  .pill-accent {
+    @apply inline-flex items-center gap-2 rounded-full bg-accent/30 px-4 py-1.5 text-xs md:text-sm font-medium text-foreground;
+  }
+
+  /* Marquee ticker */
+  .marquee {
+    display: flex;
+    width: max-content;
+    animation: marquee 60s linear infinite;
+  }
 }
 
 @keyframes fade-up {
   from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }
