@@ -31,7 +31,7 @@ const Sidebar = ({
   pathname: string;
   onClose?: () => void;
 }) => (
-  <div className="flex flex-col h-full">
+  <div className="flex flex-col h-full overflow-hidden">
     {/* Logo */}
     <div className="px-6 h-16 flex items-center justify-between border-b border-border shrink-0">
       <Logo />
@@ -46,7 +46,7 @@ const Sidebar = ({
       )}
     </div>
 
-    {/* Nav — min-h-0 is critical to allow flex-1 + overflow-y-auto to work */}
+    {/* Nav */}
     <nav className="flex-1 min-h-0 px-3 py-6 space-y-1 overflow-y-auto">
       {nav.map((item) => {
         const active = pathname === item.to;
@@ -62,21 +62,21 @@ const Sidebar = ({
                 : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
             )}
           >
-            <item.icon className="h-4 w-4" />
-            {item.label}
+            <item.icon className="h-4 w-4 shrink-0" />
+            <span className="truncate">{item.label}</span>
           </Link>
         );
       })}
     </nav>
 
-    {/* Sign out — always pinned at bottom */}
-    <div className="px-3 py-4 border-t border-border shrink-0">
+    {/* Sign out (always visible) */}
+    <div className="px-3 py-4 border-t border-border shrink-0 pb-[env(safe-area-inset-bottom)]">
       <Link
         href="/"
         onClick={onClose}
         className="flex items-center gap-3 rounded-md px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
       >
-        <LogOut className="h-4 w-4" />
+        <LogOut className="h-4 w-4 shrink-0" />
         Sign out
       </Link>
     </div>
@@ -105,7 +105,7 @@ export default function DashboardLayout({
   return (
     <div className="min-h-screen bg-background">
       {/* Desktop sidebar — fixed to viewport, never scrolls with page */}
-      <aside className="hidden md:flex fixed top-0 left-0 h-screen w-64 flex-col border-r border-border bg-sidebar z-30">
+      <aside className="fixed top-0 left-0 h-[100dvh] w-64 flex-col border-r border-border bg-sidebar z-30 md:flex hidden">
         <Sidebar pathname={pathname} />
       </aside>
 
