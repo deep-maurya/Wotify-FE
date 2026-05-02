@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Wotify — Lemonn-inspired design system. All colors HSL. */
-
 @layer base {
   :root {
     /* Surfaces */
