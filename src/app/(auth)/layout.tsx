@@ -8,9 +8,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="min-h-screen grid lg:grid-cols-[2fr_1fr] bg-background">
       <div className="flex flex-col lg:order-2">
-        <div className="h-16 px-6 md:px-10 flex items-center justify-between border-b border-border">
+        <div className="sticky top-0 z-30 h-16 px-6 md:px-10 flex items-center justify-between border-b border-border bg-background/80 backdrop-blur-md">
           <Logo />
-          {/* <ThemeToggle /> */}
         </div>
         <div className="flex-1 flex items-center px-6 md:px-10 py-16">
           {children}

@@ -11,12 +11,14 @@ import {
   LogOut,
   Menu,
   X,
+  SquareDashedKanban,
 } from 'lucide-react';
 import { Logo } from '@/components/wotify/Logo';
 import { ThemeToggle } from '@/components/wotify/ThemeToggle';
 import { cn } from '@/lib/utils';
 
 const nav = [
+  { to: '/overview', label: 'Dashboard', icon: SquareDashedKanban },
   { to: '/dashboard', label: 'Overview', icon: LayoutDashboard },
   { to: '/wallets/new', label: 'Add wallet', icon: Plus },
   { to: '/notifications', label: 'Notifications', icon: Bell },
@@ -30,6 +32,7 @@ const Sidebar = ({
   onClose?: () => void;
 }) => (
   <div className="flex flex-col h-full">
+    {/* Logo */}
     <div className="px-6 h-16 flex items-center justify-between border-b border-border shrink-0">
       <Logo />
       {onClose && (
@@ -43,7 +46,8 @@ const Sidebar = ({
       )}
     </div>
 
-    <nav className="flex-1 px-3 py-6 space-y-1 overflow-y-auto">
+    {/* Nav — min-h-0 is critical to allow flex-1 + overflow-y-auto to work */}
+    <nav className="flex-1 min-h-0 px-3 py-6 space-y-1 overflow-y-auto">
       {nav.map((item) => {
         const active = pathname === item.to;
         return (
@@ -65,6 +69,7 @@ const Sidebar = ({
       })}
     </nav>
 
+    {/* Sign out — always pinned at bottom */}
     <div className="px-3 py-4 border-t border-border shrink-0">
       <Link
         href="/"
@@ -93,15 +98,14 @@ export default function DashboardLayout({
     };
   }, [mobileOpen]);
 
-  // Close drawer on route change
   useEffect(() => {
     setMobileOpen(false);
   }, [pathname]);
 
   return (
-    <div className="min-h-screen flex w-full bg-background">
-      {/* Desktop sidebar */}
-      <aside className="hidden md:flex w-64 shrink-0 flex-col border-r border-border bg-sidebar">
+    <div className="min-h-screen bg-background">
+      {/* Desktop sidebar — fixed to viewport, never scrolls with page */}
+      <aside className="hidden md:flex fixed top-0 left-0 h-screen w-64 flex-col border-r border-border bg-sidebar z-30">
         <Sidebar pathname={pathname} />
       </aside>
 
@@ -123,10 +127,9 @@ export default function DashboardLayout({
         <Sidebar pathname={pathname} onClose={() => setMobileOpen(false)} />
       </div>
 
-      {/* Main content */}
-      <div className="flex-1 flex flex-col min-w-0">
-        <header className="h-16 border-b border-border flex items-center justify-between px-6 md:px-10 shrink-0">
-          {/* Left — hamburger on mobile, wallet info on desktop */}
+      {/* Main content — offset by sidebar width on desktop */}
+      <div className="md:pl-64 flex flex-col min-h-screen">
+        <header className="sticky top-0 z-20 h-16 border-b border-border flex items-center justify-between px-6 md:px-10 shrink-0 bg-background/80 backdrop-blur-md">
           <div className="flex items-center gap-3">
             <button
               className="md:hidden p-2 rounded-md hover:bg-accent transition-colors"
@@ -146,7 +149,6 @@ export default function DashboardLayout({
             </div>
           </div>
 
-          {/* Right */}
           <div className="flex items-center gap-3">
             <span className="hidden sm:inline-flex items-center gap-2 text-xs font-mono text-muted-foreground">
               <span className="h-1.5 w-1.5 rounded-full bg-success animate-pulse" />
