@@ -14,13 +14,13 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Address } from '@/components/wotify/Address';
 import { ChainTag } from '@/components/wotify/ChainTag';
-import { SAMPLE_WALLETS, CHAINS } from '@/lib/wotify';
+import { SAMPLE_WALLETS, CHAINS, ChainKey } from '@/lib/wotify';
 
 type WalletBalance = {
   id: string;
   label: string;
   address: string;
-  chain: string;
+  chain: ChainKey;
   balance: string;
   balanceUsd: number;
   token: string;
