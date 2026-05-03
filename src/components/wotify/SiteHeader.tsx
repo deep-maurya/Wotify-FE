@@ -11,10 +11,10 @@ import TronLogo from '@/components/icons/TronLogo';
 import PolygonLogo from '@/components/icons/PolygonLogo';
 
 const NAV_LINKS = [
-  { label: 'Features', href: '#features' },
-  { label: 'Chains', href: '#chains' },
-  { label: 'How it works', href: '#how-it-works' },
-  { label: 'Pricing', href: '#pricing' },
+  { label: 'Features', href: '/#features' },
+  { label: 'Chains', href: '/#chains' },
+  { label: 'How it works', href: '/#how-it-works' },
+  { label: 'Pricing', href: '/#pricing' },
 ];
 
 const DrawerPromo = () => (

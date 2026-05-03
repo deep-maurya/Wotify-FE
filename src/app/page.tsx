@@ -16,6 +16,7 @@ import { CHAINS } from '@/lib/wotify';
 import { StatusBadge } from '@/components/wotify/StatusBadge';
 import { Address } from '@/components/wotify/Address';
 import HeroSection from '@/components/wotify/HeroSection';
+import Footer from '@/components/wotify/Footer';
 
 const features = [
   {
@@ -299,24 +300,7 @@ const Index = () => {
         </div>
       </section>
 
-      <footer className="border-t border-border bg-surface">
-        <div className="mx-auto max-w-7xl px-6 md:px-10 py-10 flex flex-wrap items-center justify-between gap-4 text-xs text-muted-foreground">
-          <span className="">
-            © 2026 Wotify Labs · Built for on-chain operators
-          </span>
-          <div className="flex gap-6">
-            <a href="#" className="hover:text-foreground">
-              Privacy
-            </a>
-            <a href="#" className="hover:text-foreground">
-              Terms
-            </a>
-            <a href="#" className="hover:text-foreground">
-              Status
-            </a>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };
