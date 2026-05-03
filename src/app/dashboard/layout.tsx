@@ -16,20 +16,24 @@ import {
 import { Logo } from '@/components/wotify/Logo';
 import { ThemeToggle } from '@/components/wotify/ThemeToggle';
 import { cn } from '@/lib/utils';
+import { useLogoutMutation } from '@/module/auth/useAuthMutations';
+import { on } from 'events';
 
 const nav = [
-  { to: '/overview', label: 'Dashboard', icon: SquareDashedKanban },
-  { to: '/dashboard', label: 'Overview', icon: LayoutDashboard },
-  { to: '/wallets/new', label: 'Add wallet', icon: Plus },
-  { to: '/notifications', label: 'Notifications', icon: Bell },
+  { to: '/dashboard/overview', label: 'Dashboard', icon: SquareDashedKanban },
+  { to: '/dashboard/', label: 'Overview', icon: LayoutDashboard },
+  { to: '/dashboard/wallets/new', label: 'Add wallet', icon: Plus },
+  { to: '/dashboard/notifications', label: 'Notifications', icon: Bell },
 ];
 
 const Sidebar = ({
   pathname,
   onClose,
+  onLogout,
 }: {
   pathname: string;
   onClose?: () => void;
+  onLogout: () => void;
 }) => (
   <div className="flex flex-col h-full">
     {/* Logo */}
@@ -73,7 +77,7 @@ const Sidebar = ({
     <div className="px-3 py-4 border-t border-border shrink-0">
       <Link
         href="/"
-        onClick={onClose}
+        onClick={onLogout}
         className="flex items-center gap-3 rounded-md px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
       >
         <LogOut className="h-4 w-4" />
@@ -90,6 +94,7 @@ export default function DashboardLayout({
 }) {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const logout = useLogoutMutation();
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? 'hidden' : '';
@@ -102,11 +107,15 @@ export default function DashboardLayout({
     setMobileOpen(false);
   }, [pathname]);
 
+  const handleLogout = () => {
+    logout.mutate();
+  };
+
   return (
     <div className="min-h-screen bg-background">
       {/* Desktop sidebar — fixed to viewport, never scrolls with page */}
       <aside className="hidden md:flex fixed top-0 left-0 h-screen w-64 flex-col border-r border-border bg-sidebar z-30">
-        <Sidebar pathname={pathname} />
+        <Sidebar pathname={pathname} onLogout={handleLogout} />
       </aside>
 
       {/* Mobile backdrop */}
@@ -124,7 +133,11 @@ export default function DashboardLayout({
           mobileOpen ? 'translate-x-0' : '-translate-x-full'
         )}
       >
-        <Sidebar pathname={pathname} onClose={() => setMobileOpen(false)} />
+        <Sidebar
+          pathname={pathname}
+          onClose={() => setMobileOpen(false)}
+          onLogout={handleLogout}
+        />
       </div>
 
       {/* Main content — offset by sidebar width on desktop */}

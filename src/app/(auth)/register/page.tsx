@@ -1,49 +1,48 @@
 'use client';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
 import { ArrowRight } from 'lucide-react';
-import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { toast } from '@/hooks/use-toast';
-
-const schema = z.object({
-  name: z.string().trim().min(2, 'Name is too short').max(80),
-  email: z.string().trim().email('Enter a valid email').max(255),
-  password: z
-    .string()
-    .min(8, 'Password must be at least 8 characters')
-    .max(120),
-});
+import { useRegisterMutation } from '@/module/auth/useAuthMutations';
+import { useForm } from 'react-hook-form';
+import {
+  RegisterFormValues,
+  registerSchema,
+} from '@/module/auth/schemas/register.schema';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { toast } from 'sonner';
+import { AxiosError } from 'axios';
+import { ApiErrorData } from '@/module/auth/auth.types';
 
 const Register = () => {
-  const navigate = useRouter();
-  const [form, setForm] = useState({ name: '', email: '', password: '' });
-  const [errors, setErrors] = useState<Record<string, string>>({});
-  const [loading, setLoading] = useState(false);
+  const register = useRegisterMutation();
 
-  const onSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const parsed = schema.safeParse(form);
-    if (!parsed.success) {
-      const errs: Record<string, string> = {};
-      parsed.error.issues.forEach(
-        (i) => (errs[i.path[0] as string] = i.message)
-      );
-      setErrors(errs);
-      return;
-    }
-    setErrors({});
-    setLoading(true);
-    setTimeout(() => {
-      toast({
-        title: 'Welcome to Wotify',
-        description: 'Your account is ready.',
-      });
-      navigate.push('/dashboard');
-    }, 600);
+  const form = useForm<RegisterFormValues>({
+    resolver: zodResolver(registerSchema),
+    defaultValues: {
+      name: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+    },
+  });
+
+  const onSubmit = (values: RegisterFormValues) => {
+    const { confirmPassword: _, ...payload } = values;
+
+    register.mutate(payload, {
+      onSuccess: () => {
+        toast.success('Account created! Welcome aboard.');
+        form.reset();
+      },
+      onError: (error) => {
+        const message =
+          (error as AxiosError<ApiErrorData>).response?.data?.message ??
+          'Registration failed. Please try again.';
+        toast.error(message);
+      },
+    });
   };
 
   return (
@@ -58,18 +57,20 @@ const Register = () => {
         Free forever for the first 5 wallets.
       </p>
 
-      <form onSubmit={onSubmit} className="mt-10 space-y-5">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="mt-10 space-y-5">
         <div className="space-y-2">
           <Label htmlFor="name">Full name</Label>
           <Input
             id="name"
-            value={form.name}
-            onChange={(e) => setForm({ ...form, name: e.target.value })}
+            value={form.getValues().name}
+            onChange={(e) => form.setValue('name', e.target.value)}
             placeholder="Jane Cooper"
             className="h-11"
           />
-          {errors.name && (
-            <p className="text-xs text-destructive">{errors.name}</p>
+          {form.formState.errors.name && (
+            <p className="text-xs text-destructive">
+              {form.formState.errors.name.message}
+            </p>
           )}
         </div>
         <div className="space-y-2">
@@ -77,13 +78,15 @@ const Register = () => {
           <Input
             id="email"
             type="email"
-            value={form.email}
-            onChange={(e) => setForm({ ...form, email: e.target.value })}
+            value={form.getValues().email}
+            onChange={(e) => form.setValue('email', e.target.value)}
             placeholder="jane@company.com"
             className="h-11"
           />
-          {errors.email && (
-            <p className="text-xs text-destructive">{errors.email}</p>
+          {form.formState.errors.email && (
+            <p className="text-xs text-destructive">
+              {form.formState.errors.email.message}
+            </p>
           )}
         </div>
         <div className="space-y-2">
@@ -91,22 +94,39 @@ const Register = () => {
           <Input
             id="password"
             type="password"
-            value={form.password}
-            onChange={(e) => setForm({ ...form, password: e.target.value })}
+            value={form.getValues().password}
+            onChange={(e) => form.setValue('password', e.target.value)}
             placeholder="At least 8 characters"
             className="h-11"
           />
-          {errors.password && (
-            <p className="text-xs text-destructive">{errors.password}</p>
+          {form.formState.errors.password && (
+            <p className="text-xs text-destructive">
+              {form.formState.errors.password.message}
+            </p>
           )}
         </div>
-
+        <div className="space-y-2">
+          <Label htmlFor="confirmPassword">Confirm Password</Label>
+          <Input
+            id="confirmPassword"
+            type="password"
+            value={form.getValues().confirmPassword}
+            onChange={(e) => form.setValue('confirmPassword', e.target.value)}
+            placeholder="Confirm your password"
+            className="h-11"
+          />
+          {form.formState.errors.confirmPassword && (
+            <p className="text-xs text-destructive">
+              {form.formState.errors.confirmPassword.message}
+            </p>
+          )}
+        </div>
         <Button
           type="submit"
-          disabled={loading}
+          disabled={register.isPending}
           className="w-full h-11 rounded-full"
         >
-          {loading ? (
+          {register.isPending ? (
             'Creating account…'
           ) : (
             <>

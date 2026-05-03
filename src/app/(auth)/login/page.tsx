@@ -1,52 +1,46 @@
 'use client';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { ArrowRight } from 'lucide-react';
-import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { toast } from '@/hooks/use-toast';
-
-const schema = z.object({
-  email: z.string().trim().email('Enter a valid email').max(255),
-  password: z
-    .string()
-    .min(8, 'Password must be at least 8 characters')
-    .max(120),
-});
+import { toast } from 'sonner';
+import {
+  LoginFormValues,
+  loginSchema,
+} from '@/module/auth/schemas/login.schema';
+import { useLoginMutation } from '@/module/auth/useAuthMutations';
+import { useForm } from 'react-hook-form';
+import { AxiosError } from 'axios';
+import { ApiErrorData } from '@/module/auth/auth.types';
 
 const Login = () => {
-  const navigate = useRouter();
-  const [form, setForm] = useState({ email: '', password: '' });
-  const [errors, setErrors] = useState<Record<string, string>>({});
-  const [loading, setLoading] = useState(false);
+  const login = useLoginMutation();
 
-  const onSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const form = useForm<LoginFormValues>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+      remember: false,
+    },
+  });
 
-    const parsed = schema.safeParse(form);
-    if (!parsed.success) {
-      const errs: Record<string, string> = {};
-      parsed.error.issues.forEach(
-        (i) => (errs[i.path[0] as string] = i.message)
-      );
-      setErrors(errs);
-      return;
-    }
+  const onSubmit = (values: LoginFormValues) => {
+    const { remember: _, ...payload } = values;
 
-    setErrors({});
-    setLoading(true);
-
-    // simulate login
-    setTimeout(() => {
-      toast({
-        title: 'Welcome back',
-        description: 'You are now logged in.',
-      });
-      navigate.push('/dashboard');
-    }, 600);
+    login.mutate(payload, {
+      onSuccess: () => {
+        toast.success('Welcome back!');
+      },
+      onError: (error) => {
+        const message =
+          (error as AxiosError<ApiErrorData>).response?.data?.message ??
+          'Login failed. Please try again.';
+        toast.error(message);
+      },
+    });
   };
 
   return (
@@ -63,20 +57,21 @@ const Login = () => {
         Enter your credentials to continue.
       </p>
 
-      <form onSubmit={onSubmit} className="mt-10 space-y-5">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="mt-10 space-y-5">
         {/* Email */}
         <div className="space-y-2">
           <Label htmlFor="email">Email</Label>
           <Input
             id="email"
             type="email"
-            value={form.email}
-            onChange={(e) => setForm({ ...form, email: e.target.value })}
+            {...form.register('email')}
             placeholder="jane@company.com"
             className="h-11"
           />
-          {errors.email && (
-            <p className="text-xs text-destructive">{errors.email}</p>
+          {form.formState.errors.email && (
+            <p className="text-xs text-destructive">
+              {form.formState.errors.email.message}
+            </p>
           )}
         </div>
 
@@ -95,24 +90,25 @@ const Login = () => {
           <Input
             id="password"
             type="password"
-            value={form.password}
-            onChange={(e) => setForm({ ...form, password: e.target.value })}
+            {...form.register('password')}
             placeholder="Enter your password"
             className="h-11"
           />
 
-          {errors.password && (
-            <p className="text-xs text-destructive">{errors.password}</p>
+          {form.formState.errors.password && (
+            <p className="text-xs text-destructive">
+              {form.formState.errors.password.message}
+            </p>
           )}
         </div>
 
         {/* Submit */}
         <Button
           type="submit"
-          disabled={loading}
+          disabled={login.isPending}
           className="w-full h-11 rounded-full"
         >
-          {loading ? (
+          {login.isPending ? (
             'Signing in…'
           ) : (
             <>
@@ -123,7 +119,7 @@ const Login = () => {
 
         {/* Footer */}
         <p className="text-xs text-muted-foreground text-center">
-          Don’t have an account?{' '}
+          Don't have an account?{' '}
           <Link
             href="/register"
             className="text-foreground underline-offset-4 hover:underline"
