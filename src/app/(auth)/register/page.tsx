@@ -62,8 +62,8 @@ const Register = () => {
           <Label htmlFor="name">Full name</Label>
           <Input
             id="name"
-            value={form.getValues().name}
-            onChange={(e) => form.setValue('name', e.target.value)}
+            type="text"
+            {...form.register('name')}
             placeholder="Jane Cooper"
             className="h-11"
           />
@@ -78,8 +78,7 @@ const Register = () => {
           <Input
             id="email"
             type="email"
-            value={form.getValues().email}
-            onChange={(e) => form.setValue('email', e.target.value)}
+            {...form.register('email')}
             placeholder="jane@company.com"
             className="h-11"
           />
@@ -94,8 +93,7 @@ const Register = () => {
           <Input
             id="password"
             type="password"
-            value={form.getValues().password}
-            onChange={(e) => form.setValue('password', e.target.value)}
+            {...form.register('password')}
             placeholder="At least 8 characters"
             className="h-11"
           />
@@ -110,8 +108,7 @@ const Register = () => {
           <Input
             id="confirmPassword"
             type="password"
-            value={form.getValues().confirmPassword}
-            onChange={(e) => form.setValue('confirmPassword', e.target.value)}
+            {...form.register('confirmPassword')}
             placeholder="Confirm your password"
             className="h-11"
           />
