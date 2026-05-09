@@ -14,7 +14,6 @@ import {
   SquareDashedKanban,
 } from 'lucide-react';
 import { Logo } from '@/components/wotify/Logo';
-import { ThemeToggle } from '@/components/wotify/ThemeToggle';
 import { cn } from '@/lib/utils';
 import { useLogoutMutation } from '@/module/auth/useAuthMutations';
 import { on } from 'events';
@@ -167,7 +166,6 @@ export default function DashboardLayout({
               <span className="h-1.5 w-1.5 rounded-full bg-success animate-pulse" />
               live
             </span>
-            <ThemeToggle />
           </div>
         </header>
 

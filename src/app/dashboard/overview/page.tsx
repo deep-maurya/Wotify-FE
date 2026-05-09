@@ -85,7 +85,7 @@ const fmt = (n: number) =>
 const ChangeChip = ({ value }: { value: number }) => {
   if (value > 0)
     return (
-      <span className="inline-flex items-center gap-1 text-xs font-mono text-emerald-600 dark:text-emerald-400">
+      <span className="inline-flex items-center gap-1 text-xs font-mono text-emerald-600">
         <TrendingUp className="h-3 w-3" />+{value.toFixed(2)}%
       </span>
     );
