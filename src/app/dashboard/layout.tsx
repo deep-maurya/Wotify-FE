@@ -21,6 +21,7 @@ const nav = [
   { to: '/dashboard/overview', label: 'Dashboard', icon: SquareDashedKanban },
   { to: '/dashboard/', label: 'Overview', icon: LayoutDashboard },
   { to: '/dashboard/wallets/new', label: 'Add wallet', icon: Plus },
+  { to: '/dashboard/wallets/manage', label: 'Manage wallets', icon: Wallet },
   { to: '/dashboard/notifications', label: 'Notifications', icon: Bell },
 ];
 
