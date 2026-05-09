@@ -1,4 +1,4 @@
-const ArbitrumLogo = () => {
+const ArbitrumLogo = ({ className }: { className?: string }) => {
   return (
     <svg
       width="98"
@@ -6,6 +6,7 @@ const ArbitrumLogo = () => {
       viewBox="0 0 98 98"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={className}
     >
       <path
         d="M96.5435 60.8261C90.005 87.0601 63.4344 103.08 37.1522 96.5371C10.9182 89.9786 -5.07549 63.4078 1.46299 37.1739C8.00148 10.9399 34.5561 -5.07951 60.7741 1.46295C87.0723 7.92523 103.066 34.5761 96.5435 60.8261Z"

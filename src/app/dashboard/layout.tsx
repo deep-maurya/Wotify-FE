@@ -16,7 +16,6 @@ import {
 import { Logo } from '@/components/wotify/Logo';
 import { cn } from '@/lib/utils';
 import { useLogoutMutation } from '@/module/auth/useAuthMutations';
-import { on } from 'events';
 
 const nav = [
   { to: '/dashboard/overview', label: 'Dashboard', icon: SquareDashedKanban },
@@ -160,16 +159,9 @@ export default function DashboardLayout({
               </span>
             </div>
           </div>
-
-          <div className="flex items-center gap-3">
-            <span className="hidden sm:inline-flex items-center gap-2 text-xs font-mono text-muted-foreground">
-              <span className="h-1.5 w-1.5 rounded-full bg-success animate-pulse" />
-              live
-            </span>
-          </div>
         </header>
 
-        <main className="flex-1 px-6 md:px-10 py-8 md:py-12">
+        <main className="flex-1 px-6 md:px-10 py-6 md:py-6">
           <div className="mx-auto max-w-6xl animate-fade-in">{children}</div>
         </main>
       </div>

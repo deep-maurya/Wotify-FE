@@ -1,4 +1,4 @@
-const PolygonLogo = () => {
+const PolygonLogo = ({ className }: { className?: string }) => {
   return (
     <svg
       width="98"
@@ -6,6 +6,7 @@ const PolygonLogo = () => {
       viewBox="0 0 98 98"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={className}
     >
       <path
         d="M49 98C76.062 98 98 76.062 98 49C98 21.938 76.062 0 49 0C21.938 0 0 21.938 0 49C0 76.062 21.938 98 49 98Z"

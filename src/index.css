@@ -89,15 +89,6 @@
     @apply transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_12px_40px_-16px_hsl(158_60%_12%/0.18)];
   }
 
-  .live-dot {
-    @apply relative inline-flex h-2 w-2 rounded-full;
-  }
-  .live-dot::after {
-    content: '';
-    @apply absolute inset-0 rounded-full animate-ping opacity-75;
-    background: inherit;
-  }
-
   .stagger > * {
     opacity: 0;
     animation: fade-up 0.6s ease-out forwards;

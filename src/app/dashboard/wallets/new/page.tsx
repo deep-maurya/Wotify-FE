@@ -2,19 +2,87 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { ArrowRight, Wallet, X } from 'lucide-react';
+import { ArrowRight, Wallet, X, ChevronDown, CheckCircle2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { CHAINS, type ChainKey } from '@/lib/wotify';
 import { toast } from '@/hooks/use-toast';
+import { cn } from '@/lib/utils';
+
+const ChainSelector = ({
+  value,
+  onChange,
+}: {
+  value: ChainKey;
+  onChange: (v: ChainKey) => void;
+}) => {
+  const [open, setOpen] = useState(false);
+  const selected = CHAINS.find((c) => c.key === value);
+
+  return (
+    <div className="relative">
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        className={cn(
+          'w-full h-11 flex items-center gap-2.5 px-3 rounded-xl border bg-background text-sm text-left transition-all',
+          'hover:border-foreground/30 focus:outline-none focus:ring-2 focus:ring-ring',
+          open ? 'border-foreground/40 ring-2 ring-ring' : 'border-input'
+        )}
+      >
+        {selected && (
+          <>
+            <selected.logo className="h-5 w-5 shrink-0" />
+            <span className="flex-1 font-medium">{selected.name}</span>
+            <span className="font-mono text-xs text-muted-foreground bg-muted px-2 py-0.5 rounded-md">
+              {selected.symbol}
+            </span>
+          </>
+        )}
+        <ChevronDown
+          className={cn(
+            'h-4 w-4 text-muted-foreground transition-transform duration-200 shrink-0',
+            open && 'rotate-180'
+          )}
+        />
+      </button>
+
+      {open && (
+        <div className="absolute z-50 mt-1.5 w-full rounded-xl border border-border bg-background shadow-lg overflow-hidden">
+          {CHAINS.map((c) => {
+            const Logo = c.logo;
+            const isSelected = value === c.key;
+            return (
+              <button
+                key={c.key}
+                type="button"
+                onClick={() => {
+                  onChange(c.key);
+                  setOpen(false);
+                }}
+                className={cn(
+                  'w-full flex items-center gap-2.5 px-3 py-2.5 text-sm transition-colors text-left',
+                  'hover:bg-muted/60',
+                  isSelected && 'bg-muted'
+                )}
+              >
+                <Logo className="h-5 w-5 shrink-0" />
+                <span className="flex-1 font-medium">{c.name}</span>
+                <span className="font-mono text-xs text-muted-foreground bg-secondary px-2 py-0.5 rounded-md">
+                  {c.symbol}
+                </span>
+                {isSelected && (
+                  <CheckCircle2 className="h-4 w-4 text-foreground shrink-0" />
+                )}
+              </button>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+};
 
 const AddWallet = () => {
   const navigate = useRouter();
@@ -22,8 +90,6 @@ const AddWallet = () => {
   const [address, setAddress] = useState('');
   const [label, setLabel] = useState('');
   const [err, setErr] = useState<string | null>(null);
-
-  const selectedChain = CHAINS.find((c) => c.key === chain);
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -75,30 +141,7 @@ const AddWallet = () => {
           {/* Chain */}
           <div className="space-y-2">
             <Label className="text-sm font-medium">Blockchain</Label>
-            <Select
-              value={chain}
-              onValueChange={(v) => setChain(v as ChainKey)}
-            >
-              <SelectTrigger className="h-11 rounded-xl">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {CHAINS.map((c) => (
-                  <SelectItem key={c.key} value={c.key}>
-                    <div className="flex items-center gap-2">
-                      <span
-                        className="h-2.5 w-2.5 rounded-full shrink-0"
-                        style={{ backgroundColor: c.color }}
-                      />
-                      <span>{c.name}</span>
-                      <span className="text-xs text-muted-foreground font-mono">
-                        · {c.symbol}
-                      </span>
-                    </div>
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <ChainSelector value={chain} onChange={setChain} />
           </div>
 
           {/* Address */}
@@ -137,16 +180,6 @@ const AddWallet = () => {
                 {err}
               </p>
             )}
-            {/* Chain hint */}
-            {selectedChain && (
-              <p className="text-xs text-muted-foreground font-mono flex items-center gap-1.5">
-                <span
-                  className="h-1.5 w-1.5 rounded-full shrink-0"
-                  style={{ backgroundColor: selectedChain.color }}
-                />
-                Monitoring on {selectedChain.name} · {selectedChain.symbol}
-              </p>
-            )}
           </div>
 
           {/* Label */}
@@ -177,15 +210,6 @@ const AddWallet = () => {
             >
               Start watching
               <ArrowRight className="h-4 w-4" />
-            </Button>
-            <Button
-              type="button"
-              variant="outline"
-              className="rounded-full h-11 px-6 gap-2"
-              onClick={() => navigate.back()}
-            >
-              <X className="h-4 w-4" />
-              Cancel
             </Button>
           </div>
         </form>
