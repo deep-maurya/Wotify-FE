@@ -94,7 +94,11 @@ export const SiteHeader = () => {
           {/* Right actions */}
           <div className="flex items-center gap-2">
             <Link href="/login">
-              <Button variant="ghost" size="sm" className="rounded-full">
+              <Button
+                size="sm"
+                variant={'secondary'}
+                className="rounded-full h-10 px-5"
+              >
                 Sign in
               </Button>
             </Link>
